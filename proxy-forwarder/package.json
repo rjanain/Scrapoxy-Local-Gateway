@@ -1,0 +1,12 @@
+{
+  "name": "proxy-forwarder",
+  "version": "1.0.0",
+  "description": "No-auth wrapper for Scrapoxy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "proxy-chain": "^2.3.0"
+  }
+}

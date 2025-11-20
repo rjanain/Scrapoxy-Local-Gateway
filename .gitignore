@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+
+# Docker volumes/data
+scrapoxy-data/
+
+# Logs
+npm-debug.log
+*.log
+
+# Editor directories
+.vscode/
+.idea/

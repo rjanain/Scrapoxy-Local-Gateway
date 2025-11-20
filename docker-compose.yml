@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  scrapoxy:
+    image: scrapoxy/scrapoxy
+    container_name: scrapoxy
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - AUTH_LOCAL_USERNAME=${AUTH_LOCAL_USERNAME}
+      - AUTH_LOCAL_PASSWORD=${AUTH_LOCAL_PASSWORD}
+      - BACKEND_JWT_SECRET=${BACKEND_JWT_SECRET}
+      - FRONTEND_JWT_SECRET=${FRONTEND_JWT_SECRET}
+      # Add other necessary Scrapoxy env vars here
+    ports:
+      - "${COMMANDER_PORT:-8889}:8890" # Commander GUI (Container listens on 8890)
+      # Proxy port 8888 is not exposed to host, only to the forwarder network
+    volumes:
+      - ./scrapoxy-data:/app/server/storage # Persistence (check path for specific version)
+    networks:
+      - scrapoxy-net
+
+  proxy-forwarder:
+    build: ./proxy-forwarder
+    container_name: scrapoxy-noauth-forwarder
+    restart: always
+    environment:
+      - PORT=8890
+      - UPSTREAM_HOST=scrapoxy
+      - UPSTREAM_PORT=8888
+      - UPSTREAM_USERNAME=${PROJECT_PROXY_USERNAME}
+      - UPSTREAM_PASSWORD=${PROJECT_PROXY_PASSWORD}
+    ports:
+      - "${PROXY_PORT:-8890}:8890"
+    depends_on:
+      - scrapoxy
+    networks:
+      - scrapoxy-net
+
+networks:
+  scrapoxy-net:
+    driver: bridge
