@@ -1,7 +1,7 @@
 {
-  "name": "proxy-forwarder",
+  "name": "scrapoxy-local-gateway-forwarder",
   "version": "1.0.0",
-  "description": "No-auth wrapper for Scrapoxy",
+  "description": "No-auth sidecar forwarder for Scrapoxy Local Gateway",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

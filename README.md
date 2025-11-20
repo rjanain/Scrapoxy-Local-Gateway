@@ -1,6 +1,6 @@
-# Scrapoxy Local Setup (No-Auth)
+# Scrapoxy Local Gateway
 
-This project provides a setup for running Scrapoxy locally on your machine with a "No-Auth" proxy endpoint.
+**Scrapoxy Local Gateway** is a production-ready, Dockerized deployment of Scrapoxy designed for seamless local proxy management. It features a custom "No-Auth" sidecar service that eliminates the need for credential management in your scrapers, allowing direct access via `localhost`. This setup provides a unified dashboard to manage diverse proxy providers (AWS, DigitalOcean, Free Proxies) while offering a simplified, open proxy endpoint for your development and scraping workflows.
 
 ## Features
 
