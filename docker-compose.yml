@@ -11,12 +11,13 @@ services:
       - AUTH_LOCAL_PASSWORD=${AUTH_LOCAL_PASSWORD}
       - BACKEND_JWT_SECRET=${BACKEND_JWT_SECRET}
       - FRONTEND_JWT_SECRET=${FRONTEND_JWT_SECRET}
+      - STORAGE_FILE_FILENAME=/app/storage/scrapoxy.json
       # Add other necessary Scrapoxy env vars here
     ports:
       - "${COMMANDER_PORT:-8889}:8890" # Commander GUI (Container listens on 8890)
       # Proxy port 8888 is not exposed to host, only to the forwarder network
     volumes:
-      - ./scrapoxy-data:/app/server/storage # Persistence (check path for specific version)
+      - ./scrapoxy-data:/app/storage # Persistence
     networks:
       - scrapoxy-net
 
