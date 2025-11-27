@@ -30,10 +30,17 @@ echo -e ""
 echo -e "Commander GUI: ${YELLOW}http://localhost:8889${NC}"
 echo -e "No-Auth Proxy: ${YELLOW}http://localhost:8890${NC}"
 echo -e ""
-echo -e "${YELLOW}IMPORTANT SETUP STEP:${NC}"
-echo -e "1. Go to http://localhost:8889 and log in."
-echo -e "2. Create a new Project."
-echo -e "3. Copy the 'Username' and 'Password' from the project dashboard."
-echo -e "4. Open the '.env' file and paste them into PROJECT_PROXY_USERNAME and PROJECT_PROXY_PASSWORD."
-echo -e "5. Run this script again to apply the changes."
+
+if [ -f "scrapoxy-data/scrapoxy.json" ]; then
+    echo -e "${GREEN}Existing project configuration found in scrapoxy-data/scrapoxy.json.${NC}"
+    echo -e "${GREEN}Your project and proxies are restored.${NC}"
+else
+    echo -e "${YELLOW}IMPORTANT SETUP STEP (First Run Only):${NC}"
+    echo -e "1. Go to http://localhost:8889 and log in."
+    echo -e "2. Create a new Project."
+    echo -e "3. Copy the 'Username' and 'Password' from the project dashboard."
+    echo -e "4. Open the '.env' file and paste them into PROJECT_PROXY_USERNAME and PROJECT_PROXY_PASSWORD."
+    echo -e "5. Run this script again to apply the changes."
+fi
+
 echo -e "${GREEN}----------------------------------------------------------------${NC}"
