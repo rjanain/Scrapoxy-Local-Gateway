@@ -20,6 +20,28 @@ services:
       - ./scrapoxy-data:/app/storage # Persistence
     networks:
       - scrapoxy-net
+    # Enterprise: Log rotation to prevent disk fill-up
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Enterprise: Resource limits to prevent out-of-control memory usage
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    # Enterprise: Healthcheck to ensure service is responsive
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8890"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   proxy-forwarder:
     build: ./proxy-forwarder
@@ -34,9 +56,32 @@ services:
     ports:
       - "${PROXY_PORT:-8890}:8890"
     depends_on:
-      - scrapoxy
+      scrapoxy:
+        condition: service_healthy
     networks:
       - scrapoxy-net
+    # Enterprise: Log rotation
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    # Enterprise: Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    # Enterprise: Healthcheck
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8890"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
 networks:
   scrapoxy-net:
