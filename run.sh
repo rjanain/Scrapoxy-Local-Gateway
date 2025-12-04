@@ -22,6 +22,7 @@ fi
 
 # Build and Run
 echo -e "${GREEN}Building and starting containers...${NC}"
+docker-compose pull
 docker-compose up -d --build
 
 echo -e "${GREEN}----------------------------------------------------------------${NC}"
